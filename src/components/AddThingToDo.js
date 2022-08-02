@@ -10,6 +10,11 @@ const AddThingToDo = ( {onSendThing, lastId} ) => {
     }
     let [toggleForm, setToggleForm] = useState(false);
     let [formData, setFormData] = useState(clearData)
+    let [isChecked, setIsChecked] = useState(false); 
+
+    const checkOnClick = () => {
+      setIsChecked(!isChecked);
+    };
 
     function formDataPublic() {
       const todoInfo = {
@@ -18,7 +23,7 @@ const AddThingToDo = ( {onSendThing, lastId} ) => {
         notes: formData.todoNotes,
         date: formData.todoDate + ' ' + formData.todoTime,
         duration: formData.todoDuration,
-        status: false
+        status: isChecked
       }
       onSendThing(todoInfo);
       setFormData(clearData); 
@@ -93,6 +98,16 @@ const AddThingToDo = ( {onSendThing, lastId} ) => {
                   value={formData.todoNotes}
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Detailed comments about the condition"></textarea>
             </div>
+          </div>
+
+          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start  sm:pt-5">
+          <label htmlFor="todoNotes" className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Done
+            </label>
+            <div className="mt-1 sm:mt-0 sm:col-span-2">
+              <input type="checkbox" id="doneCheck" name="doneCheck" 
+                  checked={isChecked} onChange={checkOnClick}/>
+             </div>
           </div>
   
   

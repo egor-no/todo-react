@@ -70,6 +70,10 @@ function App() {
                     setToDoList(toDoList
                       .filter(thing => thingId !== thing.id ))
                 }
+                onThingDone={ 
+                  () => {thing.status = !thing.status; 
+                         console.log(thing.status)}
+                }
               />
           ))
         }
