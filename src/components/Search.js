@@ -2,7 +2,7 @@ import { BiSearch, BiCaretDown, BiCheck } from "react-icons/bi"
 import { useState } from 'react'
 
 
-const DropDown = ({ toggle, sortBy, onSortByChange, orderBy, onOrderByChange }) => {
+const DropDown = ({ toggle, sortBy, onSortByChange, orderBy, onOrderByChange, undoneFirst, onUndoneFirstByChange }) => {
     if (!toggle) {
       return null; 
     }
@@ -22,12 +22,15 @@ const DropDown = ({ toggle, sortBy, onSortByChange, orderBy, onOrderByChange }) 
         <div onClick={() => onOrderByChange('desc')}
           className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer"
           role="menuitem">Desc  {(orderBy === 'desc') && <BiCheck />}</div>
+        <div onClick={() => onUndoneFirstByChange()}
+          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
+          role="menuitem">Not done first  {(undoneFirst === true) && <BiCheck />}</div>
       </div>
     </div>
     )
 }
 
-const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderByChange }) => {
+const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderByChange, undoneFirst, onUndoneFirstByChange }) => {
     let [toggleSort, setToggleSort] = useState(false);
     return (
         <div className="py-5">
@@ -50,6 +53,8 @@ const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderB
                 onSortByChange={mySort => onSortByChange(mySort)}
                 orderBy={orderBy} 
                 onOrderByChange={myOrder => onOrderByChange(myOrder)}
+                undoneFirst = {undoneFirst}
+                onUndoneFirstByChange = {() => onUndoneFirstByChange()}
               />
             </div>
           </div>

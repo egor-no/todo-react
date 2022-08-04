@@ -10,6 +10,7 @@ function App() {
   let [query, setQuery] = useState("");
   let [sortBy, setSortBy] = useState("todoTitle");
   let [orderBy, setOrderBy] = useState("asc"); 
+  let [undoneFirst, setUndoneFirst] = useState(false); 
 
   const filteredToDoList = toDoList.filter(
     item => {
@@ -19,16 +20,22 @@ function App() {
     }
   ).sort((a,b) => { 
     let order = (orderBy==='asc') ? 1 : -1; 
-    if (typeof a[sortBy] === 'string' || a[sortBy] instanceof String
-         && typeof b[sortBy] === 'string' || b[sortBy] instanceof String)
-      return (
-        a[sortBy].toLowerCase() < b[sortBy].toLowerCase()
-          ? -1 * order : 1 * order 
-      )
-    else return (
-        a[sortBy] < b[sortBy]
-          ? -1 * order : 1 * order
-    )
+    if (undoneFirst && a.status === false && b.status === true) {
+        return -1;
+    } else if (undoneFirst && a.status === true && b.status === false) {
+        return 1; 
+    } else { 
+        if (typeof a[sortBy] === 'string' || a[sortBy] instanceof String
+            && typeof b[sortBy] === 'string' || b[sortBy] instanceof String)
+          return (
+            a[sortBy].toLowerCase() < b[sortBy].toLowerCase()
+              ? -1 * order : 1 * order 
+          )
+        else return (
+            a[sortBy] < b[sortBy]
+              ? -1 * order : 1 * order
+        )
+    }
   })
 
   const fetchData = useCallback( () => {
@@ -58,6 +65,8 @@ function App() {
         onOrderByChange = {mySort => setOrderBy(mySort)}
         sortBy = {sortBy}
         onSortByChange = {mySort => setSortBy(mySort)}
+        undoneFirst = {undoneFirst}
+        onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)}
       />
 
       <ul className="divide-y divide-gray-200">
@@ -68,11 +77,10 @@ function App() {
                 onDeleteThing={
                   thingId => 
                     setToDoList(toDoList
-                      .filter(thing => thingId !== thing.id ))
+                      .filter(thing => thingId !== thing.id))
                 }
                 onThingDone={ 
-                  () => {thing.status = !thing.status; 
-                         console.log(thing.status)}
+                  () => {thing.status = !thing.status}
                 }
               />
           ))

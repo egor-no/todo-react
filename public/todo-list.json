@@ -5,7 +5,7 @@
       "notes": "Make json file in public folder for the new to-do list project",
       "date": "2022-07-28 16:30",
 	    "duration": 30, 
-	    "status": false
+	    "status": true
     },
 	{
       "id": "1",
@@ -13,7 +13,7 @@
       "notes": "",
       "date": "2022-07-28 17:00",
 	    "duration": 60, 
-	    "status": false
+	    "status": true
     },
     {
       "id": "2",
@@ -21,7 +21,7 @@
       "notes": "Work with the files App.js and inex.js ",
       "date": "2022-07-30 13:30",
 	    "duration": 90, 
-	    "status": false
+	    "status": true
     }, 
     {
       "id": "3",
@@ -29,6 +29,22 @@
       "notes": "At that new lounge bar ",
       "date": "2022-07-30 19:00",
 	    "duration": 90, 
+	    "status": true
+    }, 
+    {
+      "id": "4",
+      "title": "Study",
+      "notes": "Study Java EE and stuff like that. Read a book, watch video course and practise",
+      "date": "2022-08-03 12:00",
+	    "duration": 420, 
+	    "status": false
+    }, 
+    {
+      "id": "5",
+      "title": "Search a job",
+      "notes": "After you've finished the training project you have to try to find job. Again.  ",
+      "date": "2022-08-15 14:00",
+	    "duration": 30, 
 	    "status": false
     }
   ]
