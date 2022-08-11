@@ -42,7 +42,8 @@ function getIcon(isDone) {
         return <BiCheckbox width="100%" />
 }
 
-const DoneThing = ({isDone, isPast, onThingDone, setIsDone, setHeaderColor, setTextColor, setDurationColor}) => {
+const DoneThing = ({isDone, isPast, onThingDone, setIsDone, setHeaderColor, setTextColor, 
+    setDurationColor, onDoneAndFocusLost}) => {
     const [buttonDesign, setButtonDesign] = useState(chooseCheckBoxDesign(isDone));
     let newIsDone = !isDone;
 
@@ -55,11 +56,14 @@ const DoneThing = ({isDone, isPast, onThingDone, setIsDone, setHeaderColor, setT
             setButtonDesign(chooseCheckBoxDesign(newIsDone));
             setDurationColor(chooseDurationColor(newIsDone));
         }}
+        onBlur={() => {
+            onDoneAndFocusLost();
+        }} 
         className={buttonDesign} >
         {getIcon(isDone)}</button>
 }
 
-const ToDoInfo = ({thingToDo, onDeleteThing, onThingDone}) => { 
+const ToDoInfo = ({thingToDo, onDeleteThing, onThingDone, onDoneAndFocusLost}) => { 
    
     let now = new Date(); 
     let date = new Date(thingToDo.date);
@@ -78,7 +82,8 @@ const ToDoInfo = ({thingToDo, onDeleteThing, onThingDone}) => {
                 className="p-1 mr-3 mt-2 rounded text-white bg-red-500 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <BiTrash /></button>
         <DoneThing isDone={isDone} isPast={isPast} onThingDone={onThingDone} setIsDone={setIsDone} 
-            setHeaderColor={setHeaderColor} setTextColor={setTextColor} setDurationColor={setDurColor} />
+            setHeaderColor={setHeaderColor} setTextColor={setTextColor} setDurationColor={setDurColor} 
+            onDoneAndFocusLost={onDoneAndFocusLost} />
         </div>
         <div className="flex-grow">
         <div className="flex items-center">

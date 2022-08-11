@@ -8,9 +8,10 @@ function App() {
 
   let [toDoList, setToDoList] = useState([]);
   let [query, setQuery] = useState("");
-  let [sortBy, setSortBy] = useState("todoTitle");
+  let [sortBy, setSortBy] = useState("date");
   let [orderBy, setOrderBy] = useState("asc"); 
-  let [undoneFirst, setUndoneFirst] = useState(false); 
+  let [undoneFirst, setUndoneFirst] = useState(true); 
+  let [reDraw, setReDraw] = useState(0); 
 
   const filteredToDoList = toDoList.filter(
     item => {
@@ -81,6 +82,9 @@ function App() {
                 }
                 onThingDone={ 
                   () => {thing.status = !thing.status}
+                }
+                onDoneAndFocusLost={
+                  () => {setReDraw(reDraw+1)}
                 }
               />
           ))
