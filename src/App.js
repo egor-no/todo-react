@@ -12,11 +12,21 @@ function App() {
   let [orderBy, setOrderBy] = useState("asc"); 
   let [undoneFirst, setUndoneFirst] = useState(true); 
   let [reDraw, setReDraw] = useState(0); 
+  let [folder, setFolder] = useState(""); 
+  let [date, setDate] = useState(null);
 
   const filteredToDoList = toDoList.filter(
     item => {
+      
+      let filterDate = date === null ? null : new Date(date); 
+      let itemDate = new Date(item.date); 
       return (
-        item.title.includes(query) 
+        item.title.includes(query)  
+        && (item.folder === undefined  || item.folder.includes(folder))
+        && (filterDate === null || 
+          itemDate.getDate() === filterDate.getDate() 
+          && itemDate.getMonth() === filterDate.getMonth() 
+          && itemDate.getFullYear() === filterDate.getFullYear())
       )
     }
   ).sort((a,b) => { 
@@ -68,6 +78,7 @@ function App() {
         onSortByChange = {mySort => setSortBy(mySort)}
         undoneFirst = {undoneFirst}
         onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)}
+        onFilterByDate = {date => setDate(date)}
       />
 
       <ul className="divide-y divide-gray-200">
