@@ -6,14 +6,15 @@ import ToDoInfo from "./components/ToDoInfo";
 
 function App() {
 
-  let [toDoList, setToDoList] = useState([]);
-  let [query, setQuery] = useState("");
-  let [sortBy, setSortBy] = useState("date");
-  let [orderBy, setOrderBy] = useState("asc"); 
-  let [undoneFirst, setUndoneFirst] = useState(true); 
-  let [reDraw, setReDraw] = useState(0); 
-  let [folder, setFolder] = useState(""); 
-  let [date, setDate] = useState(null);
+  var [toDoList, setToDoList] = useState([]);
+  var [query, setQuery] = useState("");
+  var [sortBy, setSortBy] = useState("date");
+  var [orderBy, setOrderBy] = useState("asc"); 
+  var [undoneFirst, setUndoneFirst] = useState(true); 
+  var [reDraw, setReDraw] = useState(0); 
+  var [folder, setFolder] = useState(""); 
+  var [doneFilter, setDoneFilter] = useState(false); 
+  var [date, setDate] = useState(null);
 
   const filteredToDoList = toDoList.filter(
     item => {
@@ -23,6 +24,7 @@ function App() {
       return (
         item.title.includes(query)  
         && (item.folder === undefined  || item.folder.includes(folder))
+        && (!item.status || !doneFilter)
         && (filterDate === null || 
           itemDate.getDate() === filterDate.getDate() 
           && itemDate.getMonth() === filterDate.getMonth() 
@@ -78,7 +80,9 @@ function App() {
         onSortByChange = {mySort => setSortBy(mySort)}
         undoneFirst = {undoneFirst}
         onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)}
-        onFilterByDate = {date => setDate(date)}
+        onFilterByDate = {filterDate => setDate(filterDate)}
+        doneFilter = {doneFilter} 
+        onFilterByDone = {() => setDoneFilter(!doneFilter)}
       />
 
       <ul className="divide-y divide-gray-200">
