@@ -14,13 +14,16 @@ function App() {
   var [reDraw, setReDraw] = useState(0); 
   var [folder, setFolder] = useState(""); 
   var [doneFilter, setDoneFilter] = useState(false); 
-  var [date, setDate] = useState(null);
+  var [dateStart, setDateStart] = useState(null);  
+  var [dateEnd, setDateEnd] = useState(null);
+
 
   const filteredToDoList = toDoList.filter(
     item => {
       
-      let filterDate = date === null ? null : new Date(date); 
+      let filterDate = dateStart === null ? null : new Date(dateStart); 
       let itemDate = new Date(item.date); 
+      if (dateStart!= null) console.log("EVERYTHING IS KOKK");
       return (
         item.title.includes(query)  
         && (item.folder === undefined  || item.folder.includes(folder))
@@ -80,7 +83,12 @@ function App() {
         onSortByChange = {mySort => setSortBy(mySort)}
         undoneFirst = {undoneFirst}
         onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)}
-        onFilterByDate = {filterDate => setDate(filterDate)}
+        onFilterByDateStart = {filterDate => {
+          filterDate === null ? setDateStart(null) : setDateStart(filterDate);
+        console.log("LHEL");}}
+        onFilterByDateEnd = {filterDate => {
+          filterDate === null ? setDateEnd(null) : setDateEnd(filterDate);
+        console.log("EL");}}
         doneFilter = {doneFilter} 
         onFilterByDone = {() => setDoneFilter(!doneFilter)}
       />

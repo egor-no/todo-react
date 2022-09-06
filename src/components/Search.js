@@ -31,7 +31,7 @@ const DropDown = ({ toggle, sortBy, onSortByChange, orderBy, onOrderByChange,
     )
 }
 
-const CalendarFilter = ( {toggle, setDateFilter, onFilterByDate, doneFilter, onFilterByDone}) => {
+const CalendarFilter = ( {toggle, setDateFilter, onFilterByDateStart, onFilterByDateEnd, doneFilter, onFilterByDone}) => {
   if (!toggle) {
     return null; 
   }
@@ -40,10 +40,10 @@ const CalendarFilter = ( {toggle, setDateFilter, onFilterByDate, doneFilter, onF
       rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" onBlur={() => {setDateFilter(false)}}>
         <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
           <div className="px-4 py-2 text-sm text-gray-700 flex justify-between cursor-pointer border-gray-1 border-t-2">
-            <Calendar
-            onChange={date => {onFilterByDate(date); setDateFilter(false); }}
+            <Calendar selectRange={true} 
+            onChange={dates => {onFilterByDateStart(dates[0]); onFilterByDateEnd(dates[1]); console.log("hi from search"); console.log(dates); setDateFilter(false); }}
           /></div>
-          <div onClick={() => {onFilterByDate(null); setDateFilter(false)}}
+          <div onClick={() => {onFilterByDateStart(null); setDateFilter(false)}}
             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
             role="menuitem">Reset the date</div>
           <div onClick={() => onFilterByDone()}
@@ -54,7 +54,7 @@ const CalendarFilter = ( {toggle, setDateFilter, onFilterByDate, doneFilter, onF
 }
 
 const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderByChange, 
-    undoneFirst, onUndoneFirstByChange, onFilterByDate, doneFilter, onFilterByDone }) => {
+    undoneFirst, onUndoneFirstByChange, onFilterByDateStart, onFilterByDateEnd, doneFilter, onFilterByDone }) => {
     let [toggleSort, setToggleSort] = useState(false);
     let [dateFilter, setDateFilter] = useState(false);
     return (
@@ -75,7 +75,8 @@ const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderB
               </button>
               <CalendarFilter toggle = {dateFilter} 
                 setDateFilter = {setDateFilter}
-                onFilterByDate={date => onFilterByDate(date)}
+                onFilterByDateStart={date => onFilterByDateStart(date)}
+                onFilterByDateEnd={date => onFilterByDateEnd(date)}
                 doneFilter = {doneFilter} 
                 onFilterByDone={() => onFilterByDone()}
               />
