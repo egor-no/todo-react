@@ -96,7 +96,7 @@ const AddThingToDo = ( {onSendThing, lastId} ) => {
               <textarea id="todoNotes" name="todoNotes" rows="3"
                   onChange={(event) => {setFormData({...formData, todoNotes:  event.target.value})}}
                   value={formData.todoNotes}
-                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Detailed comments about the condition"></textarea>
+                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Detailed comments about this ochen vazhnoe delo"></textarea>
             </div>
           </div>
 

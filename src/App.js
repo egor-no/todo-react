@@ -20,18 +20,17 @@ function App() {
 
   const filteredToDoList = toDoList.filter(
     item => {
-      
-      let filterDate = dateStart === null ? null : new Date(dateStart); 
+
+      let filterDateStart = (dateStart === null ? null : new Date(dateStart)); 
+      let filterDateEnd = (dateStart === null ? null : new Date(dateEnd)); 
       let itemDate = new Date(item.date); 
-      if (dateStart!= null) console.log("EVERYTHING IS KOKK");
+
       return (
         item.title.includes(query)  
         && (item.folder === undefined  || item.folder.includes(folder))
         && (!item.status || !doneFilter)
-        && (filterDate === null || 
-          itemDate.getDate() === filterDate.getDate() 
-          && itemDate.getMonth() === filterDate.getMonth() 
-          && itemDate.getFullYear() === filterDate.getFullYear())
+        && (filterDateStart === null || filterDateStart.getTime() <= itemDate.getTime())
+        && (filterDateEnd === null || filterDateEnd.getTime() >= itemDate.getTime())
       )
     }
   ).sort((a,b) => { 
@@ -82,13 +81,9 @@ function App() {
         sortBy = {sortBy}
         onSortByChange = {mySort => setSortBy(mySort)}
         undoneFirst = {undoneFirst}
-        onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)}
-        onFilterByDateStart = {filterDate => {
-          filterDate === null ? setDateStart(null) : setDateStart(filterDate);
-        console.log("LHEL");}}
-        onFilterByDateEnd = {filterDate => {
-          filterDate === null ? setDateEnd(null) : setDateEnd(filterDate);
-        console.log("EL");}}
+        onUndoneFirstByChange = {() => setUndoneFirst(!undoneFirst)} 
+        onFilterByDateStart = {setDateStart} 
+        onFilterByDateEnd = {setDateEnd} 
         doneFilter = {doneFilter} 
         onFilterByDone = {() => setDoneFilter(!doneFilter)}
       />

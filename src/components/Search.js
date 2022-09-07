@@ -31,19 +31,19 @@ const DropDown = ({ toggle, sortBy, onSortByChange, orderBy, onOrderByChange,
     )
 }
 
-const CalendarFilter = ( {toggle, setDateFilter, onFilterByDateStart, onFilterByDateEnd, doneFilter, onFilterByDone}) => {
+const CalendarFilter = ( {toggle, setDateFilter, onFilterByDates, doneFilter, onFilterByDone}) => {
   if (!toggle) {
     return null; 
   }
   return (
       <div className="origin-top-right absolute right-0 mt-2 w-56
-      rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5" onBlur={() => {setDateFilter(false)}}>
+      rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
         <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
           <div className="px-4 py-2 text-sm text-gray-700 flex justify-between cursor-pointer border-gray-1 border-t-2">
-            <Calendar selectRange={true} 
-            onChange={dates => {onFilterByDateStart(dates[0]); onFilterByDateEnd(dates[1]); console.log("hi from search"); console.log(dates); setDateFilter(false); }}
+            <Calendar selectRange={true}  
+               onChange={onFilterByDates}
           /></div>
-          <div onClick={() => {onFilterByDateStart(null); setDateFilter(false)}}
+          <div onClick={() => {onFilterByDates(null); setDateFilter(false)}}
             className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex justify-between cursor-pointer border-gray-1 border-t-2"
             role="menuitem">Reset the date</div>
           <div onClick={() => onFilterByDone()}
@@ -75,8 +75,10 @@ const Search = ({query, onQueryChange, sortBy, onSortByChange, orderBy, onOrderB
               </button>
               <CalendarFilter toggle = {dateFilter} 
                 setDateFilter = {setDateFilter}
-                onFilterByDateStart={date => onFilterByDateStart(date)}
-                onFilterByDateEnd={date => onFilterByDateEnd(date)}
+                onFilterByDates={dates => {
+                   onFilterByDateStart(dates === null? null : dates[0]);
+                   onFilterByDateEnd(dates === null? null : dates[1]); 
+                }}
                 doneFilter = {doneFilter} 
                 onFilterByDone={() => onFilterByDone()}
               />
